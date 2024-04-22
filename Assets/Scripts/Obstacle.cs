@@ -21,7 +21,7 @@ public class Obstacle : MonoBehaviour
 
         else if(collision.tag == "Player")
         {
-            Destroy(player.gameObject);
+            player.SetActive(false);
         }
     }
 }
