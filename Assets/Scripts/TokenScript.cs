@@ -17,7 +17,7 @@ public class TokenScript : MonoBehaviour
 
     [SerializeField] private TMPro.TextMeshProUGUI tokenBalanceText;
 
-    private const string DROP_ERC20_CONTRACT = "0x116369a355aD7F09e1Be51E0bD0374deE04F75D0";
+    private const string DROP_ERC20_CONTRACT = "0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae";
 
     void start()
     {

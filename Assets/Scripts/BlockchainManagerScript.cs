@@ -26,7 +26,13 @@ public class BlockchainManagerScript : MonoBehaviour
 
     private string _score;
 
-    public GameObject ERC20TokenBalanceText;
+    public TextMeshProUGUI ERC20TokenBalanceText;
+
+    public GameObject noCardPanel;
+
+    public GameObject hasCardPanel;
+
+    public Button claimCardButton;
 
 
     void Start()
@@ -76,15 +82,61 @@ public class BlockchainManagerScript : MonoBehaviour
 
         Address = await ThirdwebManager.Instance.SDK.Wallet.Connect(connection);
 
-        OnLoggedIn.Invoke(Address);
+        var contract = ThirdwebManager.Instance.SDK.GetContract("0x25717214e6472B19A95Cc8EC56E28C56d2b07d36");
+        var balance = await contract.ERC721.BalanceOf(Address);
+
+        if(balance == 0)
+        {
+        
+        }
+        else
+        {
+            
+        }
+
+        InvokeOnLoggedIn();
+
 
         }
 
+    void InvokeOnLoggedIn()
+    {
+        OnLoggedIn.Invoke(Address);
+        GetTokenBalance();
+    }
+
     public async void ClaimToken()
     {
-        Contract contract = ThirdwebManager.Instance.SDK.GetContract("0x9F5d12c4A61F39AAd3e6b3973db70FCe1244e6DA");
+        Contract contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
 
         var data = await contract.ERC20.Claim(_score);
+
+        claimTokenButton.interactable = false;
+    }
+
+    public async void GetTokenBalance()
+    {
+        Contract contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
+
+        var balance = await contract.ERC20.BalanceOf(Address);
+
+
+        ERC20TokenBalanceText.text = balance.displayValue;
+    }
+
+    public async void MintFrogPlush()
+    {
+        var contract = ThirdwebManager.Instance.SDK.GetContract("0x8aa9f12Bdf2fbb8A2450DFc4588C10fBeDAfDEDa");
+        var result = await contract.ERC721.Claim(1);
+    }    
+
+    public async void ApproveAllowance()
+    {
+        var contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
+        string amount = "10000000000";
+        var data = await contract.ERC20.SetAllowance("0x8aa9f12Bdf2fbb8A2450DFc4588C10fBeDAfDEDa", amount);
+
+        MintFrogPlush();
     }
 
 }
