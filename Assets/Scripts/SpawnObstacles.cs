@@ -23,6 +23,7 @@ public class SpawnObstacles : MonoBehaviour
             Spawn();
             spawnTime = Time.time + timeBetweenSpawn;
         }
+
     }
 
     void Spawn()

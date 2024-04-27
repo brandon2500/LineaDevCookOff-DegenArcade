@@ -28,16 +28,19 @@ public class BlockchainManagerScript : MonoBehaviour
 
     public TextMeshProUGUI ERC20TokenBalanceText;
 
-    public GameObject noCardPanel;
-
-    public GameObject hasCardPanel;
+    public TextMeshProUGUI ERC20TokenBalanceText2;
 
     public Button claimCardButton;
+
+    public GameObject ClaimingState;
+    public GameObject HasClaimedState;
 
 
     void Start()
     {
         var sdk = ThirdwebManager.Instance.SDK;
+        ClaimingState.SetActive(false);
+        HasClaimedState.SetActive(false);
     }
 
     void Update()
@@ -107,36 +110,90 @@ public class BlockchainManagerScript : MonoBehaviour
 
     public async void ClaimToken()
     {
-        Contract contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
-
-        var data = await contract.ERC20.Claim(_score);
 
         claimTokenButton.interactable = false;
-    }
 
-    public async void GetTokenBalance()
-    {
         Contract contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
+        ClaimingState.SetActive(true);
 
-        var balance = await contract.ERC20.BalanceOf(Address);
+        var data = await contract.ERC20.Claim(_score);
+        ClaimingState.SetActive(false);
+        HasClaimedState.SetActive(true);
 
-
-        ERC20TokenBalanceText.text = balance.displayValue;
     }
+
 
     public async void MintFrogPlush()
     {
         var contract = ThirdwebManager.Instance.SDK.GetContract("0x8aa9f12Bdf2fbb8A2450DFc4588C10fBeDAfDEDa");
         var result = await contract.ERC721.Claim(1);
+
+        GetTokenBalance();
     }    
 
-    public async void ApproveAllowance()
+    public async void ApproveAllowancePlushFrog()
     {
         var contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
-        string amount = "10000000000";
+        string amount = "50001";
         var data = await contract.ERC20.SetAllowance("0x8aa9f12Bdf2fbb8A2450DFc4588C10fBeDAfDEDa", amount);
 
         MintFrogPlush();
     }
 
+    public async void MintFoxPlush()
+    {
+        var contract = ThirdwebManager.Instance.SDK.GetContract("0x889f147a51E01924ae81ac4d82B127ccBBc0717B");
+        var result = await contract.ERC721.Claim(1);
+
+        GetTokenBalance();
+    }
+
+    public async void ApproveAllowanceForFox()
+    {
+        var contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
+        string amount = "25001";
+        var data = await contract.ERC20.SetAllowance("0x889f147a51E01924ae81ac4d82B127ccBBc0717B", amount);
+
+        MintFoxPlush();
+    }
+
+    public async void MintDinoPlush()
+    {
+        var contract = ThirdwebManager.Instance.SDK.GetContract("0x662dC090db2937D79715FE7776d0B50891356E0c");
+        var result = await contract.ERC721.Claim(1);
+
+        GetTokenBalance();
+    }
+
+    public async void ApproveAllowanceForDino()
+    {
+        var contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
+        string amount = "10001";
+        var data = await contract.ERC20.SetAllowance("0x662dC090db2937D79715FE7776d0B50891356E0c", amount);
+
+        MintDinoPlush();
+    }
+
+    public void DisableText()
+    {
+        ClaimingState.SetActive(false);
+        HasClaimedState.SetActive(false);
+    }
+
+    public async void GetTokenBalance()
+    {
+        try
+        {
+            var address = await ThirdwebManager.Instance.SDK.Wallet.GetAddress();
+            Contract contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
+            var data = await contract.ERC20.BalanceOf(address);
+            ERC20TokenBalanceText.text = "$TICKETS:" + data.displayValue;
+            ERC20TokenBalanceText2.text = "$TICKETS:" + data.displayValue;
+        }
+        catch (System.Exception)
+        {
+
+            throw;
+        }
+    }
 }

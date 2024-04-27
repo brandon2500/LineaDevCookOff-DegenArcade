@@ -13,6 +13,8 @@ public class GameOver : MonoBehaviour
     public GameObject player;
     public Transform respawnPoint;
     public TextMeshProUGUI scoreText;
+    public Button claimTokenButton;
+    public GameObject obstacles;
 
     private int score;
    
@@ -26,22 +28,29 @@ public class GameOver : MonoBehaviour
         if(GameObject.FindGameObjectWithTag("Player") == null)
         {
             gameOverPanel.SetActive(true);
+            obstacles.SetActive(false);
+
         }
     }
 
     public void RestartGame()
     {
+
         player.SetActive(true);
 
         gameOverPanel.SetActive(false);
 
-        score = 0;
+        claimTokenButton.interactable = true;
+
+        obstacles.SetActive(true);
+
         UpdateScoreText();
 
     }
 
     void UpdateScoreText()
     {
+        score = 0;
         scoreText.text = score.ToString();
     }
 }

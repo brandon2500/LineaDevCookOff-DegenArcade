@@ -17,6 +17,8 @@ public class TokenScript : MonoBehaviour
 
     [SerializeField] private TMPro.TextMeshProUGUI tokenBalanceText;
 
+    [SerializeField] private TMPro.TextMeshProUGUI tokenBalanceText2;
+
     private const string DROP_ERC20_CONTRACT = "0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae";
 
     void start()
@@ -41,6 +43,7 @@ public class TokenScript : MonoBehaviour
             Contract contract = ThirdwebManager.Instance.SDK.GetContract(DROP_ERC20_CONTRACT);
             var data = await contract.ERC20.BalanceOf(address);
             tokenBalanceText.text = "$TICKETS:" + data.displayValue;
+            tokenBalanceText2.text = "$TICKETS:" + data.displayValue;
         }
         catch (System.Exception)
         {
