@@ -5,19 +5,7 @@ EditorBuildSettings:
   m_ObjectHideFlags: 0
   serializedVersion: 2
   m_Scenes:
-  - enabled: 0
-    path: Assets/Scenes/InfiniteGameScene.unity
-    guid: 2cda990e2423bbf4892e6590ba056729
-  - enabled: 0
-    path: Assets/Scenes/ArcadeMain.unity
-    guid: 3ba88326e0f981c4d9e6bd1534d38c17
-  - enabled: 0
-    path: Assets/Scenes/CardMachine.unity
-    guid: c41cc26a5bb7ef64c906a34cdd4b9b38
   - enabled: 1
     path: Assets/Scenes/MainMenu.unity
     guid: 686bee4bbd32c8641889771bb1b93556
-  - enabled: 0
-    path: Assets/Scenes/PrizeCounter.unity
-    guid: 0a52e293221410445abae9b710c234cf
   m_configObjects: {}

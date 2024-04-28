@@ -134,7 +134,7 @@ public class BlockchainManagerScript : MonoBehaviour
     public async void ApproveAllowancePlushFrog()
     {
         var contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
-        string amount = "50001";
+        string amount = "10001";
         var data = await contract.ERC20.SetAllowance("0x8aa9f12Bdf2fbb8A2450DFc4588C10fBeDAfDEDa", amount);
 
         MintFrogPlush();
@@ -151,7 +151,7 @@ public class BlockchainManagerScript : MonoBehaviour
     public async void ApproveAllowanceForFox()
     {
         var contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
-        string amount = "25001";
+        string amount = "2501";
         var data = await contract.ERC20.SetAllowance("0x889f147a51E01924ae81ac4d82B127ccBBc0717B", amount);
 
         MintFoxPlush();
@@ -168,7 +168,7 @@ public class BlockchainManagerScript : MonoBehaviour
     public async void ApproveAllowanceForDino()
     {
         var contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
-        string amount = "10001";
+        string amount = "501";
         var data = await contract.ERC20.SetAllowance("0x662dC090db2937D79715FE7776d0B50891356E0c", amount);
 
         MintDinoPlush();
@@ -188,7 +188,7 @@ public class BlockchainManagerScript : MonoBehaviour
             Contract contract = ThirdwebManager.Instance.SDK.GetContract("0x7BB8A91eEd4b2d987C53A01AB009D84d9C8449ae");
             var data = await contract.ERC20.BalanceOf(address);
             ERC20TokenBalanceText.text = "$TICKETS:" + data.displayValue;
-            ERC20TokenBalanceText2.text = "$TICKETS:" + data.displayValue;
+            ERC20TokenBalanceText2.text = "$TICKETS:" + data.displayValue.ToString();
         }
         catch (System.Exception)
         {
